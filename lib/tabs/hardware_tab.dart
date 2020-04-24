@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:system_info/system_info.dart';
 
 import '../device_info.dart';
 
@@ -46,14 +45,6 @@ class _ProcessorState extends State<Processor> {
   @override
   void initState() {
     super.initState();
-    final processors = SysInfo.processors;
-    print('Number of processors    : ${processors.length}');
-    for (var processor in processors) {
-      print('  Architecture          : ${processor.architecture}');
-      print('  Name                  : ${processor.name}');
-      print('  Socket                : ${processor.socket}');
-      print('  Vendor                : ${processor.vendor}');
-    }
     mDeviceInfo.initPlatformState().then((value) {
       setState(() {
         processorInfoList[0] = mDeviceInfo.getDeviceData('hardware');
