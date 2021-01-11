@@ -1,6 +1,6 @@
+import 'package:battery_info/battery_info_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Battery extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _BatteryState extends State<Battery> {
   static const padding = 20.0;
 
   List batteryInfoList = [
-    'Loading',
+    '%',
     'Loading',
     'Loading',
     'Loading',
@@ -24,13 +24,112 @@ class _BatteryState extends State<Battery> {
     'Loading',
     'Loading'
   ];
-  String batteryLevel = 'Loading';
-  static const platform = const MethodChannel('personal.droid.dev/battery');
+
+  void getBatteryLevel() async {
+    String _batteryLevel =
+        (await BatteryInfoPlugin().androidBatteryInfo).batteryLevel.toString();
+    setState(() {
+      batteryInfoList[0] = _batteryLevel + "%";
+    });
+  }
+
+  void getChargingStatus() async {
+    String _chargingStatus = (await BatteryInfoPlugin().androidBatteryInfo)
+        .chargingStatus
+        .toString()
+        .replaceFirst("ChargingStatus.", "");
+    setState(() {
+      batteryInfoList[1] = _chargingStatus;
+    });
+  }
+
+  void getBatteryCurrent() async {
+    dynamic _batteryCurrent =
+        (await BatteryInfoPlugin().androidBatteryInfo).currentNow;
+    print(_batteryCurrent);
+    _batteryCurrent = (_batteryCurrent / 1000).toStringAsFixed(0);
+
+    setState(() {
+      if (batteryInfoList[1] == "Discharging") {
+        batteryInfoList[2] = "-" + _batteryCurrent + " mA";
+      } else {
+        batteryInfoList[2] = _batteryCurrent + " mA";
+      }
+    });
+  }
+
+  void getBatteryTemp() async {
+    String _batteryTemp =
+        (await BatteryInfoPlugin().androidBatteryInfo).temperature.toString();
+    setState(() {
+      batteryInfoList[3] = _batteryTemp + "°C";
+    });
+  }
+
+  void getBatteryTech() async {
+    String _batteryTech =
+        (await BatteryInfoPlugin().androidBatteryInfo).technology;
+    setState(() {
+      batteryInfoList[4] = _batteryTech;
+    });
+  }
+
+  void getBatteryHealth() async {
+    String _batteryHealth =
+        (await BatteryInfoPlugin().androidBatteryInfo).health;
+    setState(() {
+      switch (_batteryHealth) {
+        case 'heath_good':
+          batteryInfoList[5] = "Good";
+          break;
+        case 'dead':
+          batteryInfoList[5] = "Dead";
+          break;
+        case 'over_heat':
+          batteryInfoList[5] = "Over Heat";
+          break;
+        case 'over_voltage':
+          batteryInfoList[5] = "Over Voltage";
+          break;
+        case 'cold':
+          batteryInfoList[5] = "Cold";
+          break;
+        default:
+          batteryInfoList[5] = "Failure";
+          break;
+      }
+    });
+  }
+
+  void getBatteryVoltage() async {
+    dynamic _batteryVoltage =
+        (await BatteryInfoPlugin().androidBatteryInfo).voltage;
+    _batteryVoltage = (_batteryVoltage / 1000).toStringAsFixed(2);
+    setState(() {
+      batteryInfoList[6] = _batteryVoltage + " V";
+    });
+  }
+
+  void getBatteryCapacity() async {
+    String _batteryCapacity = (await BatteryInfoPlugin().androidBatteryInfo)
+        .chargeTimeRemaining
+        .toString();
+    setState(() {
+      batteryInfoList[7] = _batteryCapacity;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _getBatteryLevel();
+    getBatteryLevel();
+    getChargingStatus();
+    getBatteryCurrent();
+    getBatteryTemp();
+    getBatteryTech();
+    getBatteryHealth();
+    getBatteryVoltage();
+    getBatteryCapacity();
   }
 
   @override
@@ -57,7 +156,7 @@ class _BatteryState extends State<Battery> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: padding),
               child: Text(
-                '72 %',
+                batteryInfoList[0],
                 style: TextStyle(
                   color: Colors.green,
                   fontSize: 50.0,
@@ -71,7 +170,7 @@ class _BatteryState extends State<Battery> {
             Column(
               children: <Widget>[
                 Text(
-                  'Discharging',
+                  batteryInfoList[1],
                   style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
@@ -79,7 +178,7 @@ class _BatteryState extends State<Battery> {
                   ),
                 ),
                 Text(
-                  'Current 298 mA',
+                  'Current ' + batteryInfoList[2],
                   style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
@@ -124,7 +223,7 @@ class _BatteryState extends State<Battery> {
               child: Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Text(
-                  batteryInfoList[1],
+                  batteryInfoList[3],
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: contentFontSize,
@@ -156,7 +255,7 @@ class _BatteryState extends State<Battery> {
               child: Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Text(
-                  batteryInfoList[2],
+                  batteryInfoList[4],
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: contentFontSize,
@@ -188,7 +287,7 @@ class _BatteryState extends State<Battery> {
               child: Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Text(
-                  batteryInfoList[3],
+                  batteryInfoList[5],
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: contentFontSize,
@@ -220,7 +319,7 @@ class _BatteryState extends State<Battery> {
               child: Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Text(
-                  batteryInfoList[4],
+                  batteryInfoList[6],
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: contentFontSize,
@@ -252,7 +351,7 @@ class _BatteryState extends State<Battery> {
               child: Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Text(
-                  batteryInfoList[5],
+                  batteryInfoList[7],
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: contentFontSize,
@@ -264,16 +363,5 @@ class _BatteryState extends State<Battery> {
         ),
       ],
     );
-  }
-
-  Future<void> _getBatteryLevel() async {
-    try {
-      final int battery = await platform.invokeMethod('getBatteryLevel');
-      setState(() {
-        batteryLevel = battery.toString();
-      });
-    } on PlatformException {
-      batteryLevel = "Failed to get battery level";
-    }
   }
 }
