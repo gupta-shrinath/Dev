@@ -1,16 +1,16 @@
-# dev
+# Dev
+<p align="left">
+<img alt="Status" src="https://img.shields.io/badge/status-ongoing-brightgreen?style=for-the-badge&labelColor=black&logo=github">
+</p>
 
-A new Flutter project.
+- Dev is a multi-platform application that displays system information.
+  -Dev is a flutter app that will run on Android, Linux and Windows.
 
-## Getting Started
+## Status
+- Working for android platform then will move the Linux platform.
+- You can checkout the [project board](https://github.com/gupta-shrinath/Dev/projects/1).
 
-This project is a starting point for a Flutter application.
+## Additional Info.
+The objective of Dev application is to learn to build app for multi platform.\
+If you would like to learn along or have any idea you can reach out to me on [twitter](https://twitter.com/gupta_shrinath).
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
