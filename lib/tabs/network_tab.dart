@@ -1,5 +1,6 @@
 import 'package:dev/utils/android_specification.dart';
-import 'package:dev/widget/specification_card.dart';
+import 'package:dev/utils/system_information_builder.dart';
+import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
 
 class Network extends StatelessWidget {
@@ -34,8 +35,7 @@ class Wifi extends StatelessWidget {
             return SpecificationCard(
               title: 'WIFI',
               content: Column(
-                children: buildWidgetsFromDeviceSpecs(
-                    deviceSpecs: snapshot.data as Map),
+                children: systemInformationBuilder(snapshot.data as Map),
               ),
             );
           } else {

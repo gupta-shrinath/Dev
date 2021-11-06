@@ -1,5 +1,6 @@
 import 'package:dev/utils/android_specification.dart';
-import 'package:dev/widget/specification_card.dart';
+import 'package:dev/utils/system_information_builder.dart';
+import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
 
 class Hardware extends StatelessWidget {
@@ -31,10 +32,9 @@ class Processor extends StatelessWidget {
           return SpecificationCard(
             title: 'PROCESSOR',
             content: Column(
-              children: buildWidgetsFromDeviceSpecs(
-                  deviceSpecs: snapshot.data as Map),
+              children: systemInformationBuilder(snapshot.data as Map),
             ),
-            imageText: 'PP',
+            imageText: 'Processor',
             imageUrl: 'images/processor-icon.png',
           );
         } else {

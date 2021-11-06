@@ -1,5 +1,6 @@
 import 'package:dev/utils/android_specification.dart';
-import 'package:dev/widget/specification_card.dart';
+import 'package:dev/utils/system_information_builder.dart';
+import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
 
 class System extends StatelessWidget {
@@ -32,8 +33,7 @@ class Device extends StatelessWidget {
           return SpecificationCard(
             title: 'DEVICE',
             content: Column(
-              children: buildWidgetsFromDeviceSpecs(
-                  deviceSpecs: snapshot.data as Map),
+              children: systemInformationBuilder(snapshot.data as Map),
             ),
             imageText: 'DEVICE',
             imageUrl: 'images/android-device-icon.png',
@@ -67,8 +67,7 @@ class _OperatingSystemState extends State<OperatingSystem> {
           return SpecificationCard(
             title: 'OPERATING SYSTEM',
             content: Column(
-              children: buildWidgetsFromDeviceSpecs(
-                  deviceSpecs: snapshot.data as Map),
+              children: systemInformationBuilder(snapshot.data as Map),
             ),
           );
         } else {
