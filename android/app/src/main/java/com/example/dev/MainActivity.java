@@ -12,23 +12,21 @@ import android.os.BatteryManager;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import java.io.InputStream;
+import android.util.Log;
 
 public class MainActivity extends FlutterActivity {
-  private static final String CHANNEL = "personal.droid.dev/battery";
+  private static final String CHANNEL = "learn.droid.dev/processor";
+
   @Override
   public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
     GeneratedPluginRegistrant.registerWith(flutterEngine);
     new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler(
                     (call, result) -> {
-                      if (call.method.equals("getBatteryLevel")) {
-                        int batteryLevel = getBatteryLevel();
-
-                        if (batteryLevel != -1) {
-                          result.success(batteryLevel);
-                        } else {
-                          result.error("UNAVAILABLE", "Battery level not available.", null);
-                        }
+                      if (call.method.equals("getProcessorName")) {
+                        String processorName = getProcessorName();
+                        result.success(processorName);
                       } else {
                         result.notImplemented();
                       }
@@ -36,18 +34,29 @@ public class MainActivity extends FlutterActivity {
             );
 
   }
-  private int getBatteryLevel() {
-    int batteryLevel = -1;
-    if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-      BatteryManager batteryManager = (BatteryManager) getSystemService(BATTERY_SERVICE);
-      batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-    } else {
-      Intent intent = new ContextWrapper(getApplicationContext()).
-              registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-      batteryLevel = (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) * 100) /
-              intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-    }
 
-    return batteryLevel;
+  private String getProcessorName() {
+    String processorName = "";
+    try {
+      String[] DATA = {"/system/bin/cat", "/proc/cpuinfo"};
+      ProcessBuilder processBuilder = new ProcessBuilder(DATA);
+      Process process = processBuilder.start();
+      InputStream inputStream = process.getInputStream();
+      byte[] byteArry = new byte[1024];
+      while (inputStream.read(byteArry) != -1) {
+        processorName = processorName + new String(byteArry);
+      }
+      inputStream.close();
+      if(processorName.contains("Hardware")) {
+        int hardwareIndex = processorName.indexOf("Hardware");
+        processorName = processorName.substring(hardwareIndex);
+      }
+      //Log.d("CPU_INFO", processorName);
+      return processorName;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      return "error";
+    }
   }
+
 }
