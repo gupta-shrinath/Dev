@@ -70,9 +70,9 @@ class SpecificationCard extends StatelessWidget {
   }
 }
 
-List<Widget> buildWidgetsFromDeviceSpecs({required Map deviceSpecs}) {
+List<Widget> buildWidgetsFromMap(map) {
   List<Widget> specInfo = [];
-  for (MapEntry spec in deviceSpecs.entries) {
+  for (MapEntry spec in map.entries) {
     print(spec.toString());
     specInfo.add(Padding(
       padding: const EdgeInsets.only(left: 15),
