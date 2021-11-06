@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// Renders a section card which contains details
+///
+/// requires [title] which is section title and
+/// [content] which is the details of that section
+/// [imageUrl] is a image displayed for the section
+/// [imageText] is a text which is adjacent to the image
 class SpecificationCard extends StatelessWidget {
   SpecificationCard(
       {Key? key,
-      @required this.title,
+      required this.title,
       required this.content,
       this.imageUrl,
       this.imageText,

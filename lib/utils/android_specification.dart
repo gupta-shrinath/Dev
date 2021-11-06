@@ -7,10 +7,17 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
+/// Defines all the system information related methods for android platform
 class AndroidSpecification extends PlatformSpecification {
+  /// device_info_plus package classes to get system information
   DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
   AndroidDeviceInfo? _androidInfo;
 
+  /// Returns a map which contains processor details
+  ///
+  /// Reads the /proc/cpuinfo file in android system
+  /// which emits line hardware : YOUR_PROCESSOR_NAME
+  /// Implemented using Platform Channel
   @override
   Future<Map<String, dynamic>> getProcessorSpecifications() async {
     if (_androidInfo == null) {
@@ -45,6 +52,7 @@ class AndroidSpecification extends PlatformSpecification {
     };
   }
 
+  /// Returns a map which contains model, manufacturer and other details
   @override
   Future<Map<String, dynamic>> getDeviceSpecifications() async {
     if (_androidInfo == null) {
@@ -59,6 +67,7 @@ class AndroidSpecification extends PlatformSpecification {
     };
   }
 
+  /// Returns a map which contains OS details
   @override
   Future<Map<String, dynamic>> getOperatingSystemSpecifications() async {
     if (_androidInfo == null) {
@@ -74,15 +83,16 @@ class AndroidSpecification extends PlatformSpecification {
     };
   }
 
+  /// Returns a map which contains battery details
   @override
   Future<Map<String, dynamic>> getBatterySpecifications() async {
     var _battery = Battery();
-    var _batteryLevel = await _battery.batteryLevel;
     return {
-      'battery_level': _batteryLevel,
+      'battery_level': await _battery.batteryLevel,
     };
   }
 
+  /// Returns a map which contains wifi details
   @override
   Future<Map<String, dynamic>> getWifiNetworkSpecifications() async {
     final NetworkInfo _networkInfo = NetworkInfo();
