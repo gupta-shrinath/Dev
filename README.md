@@ -4,7 +4,7 @@
 </p>
 
 - Dev is a multi-platform application that displays system information.
-  -Dev is a flutter app that will run on Android, Linux and Windows.
+- Dev is a flutter app that will run on Android, Linux and Windows.
 
 ## Status
 - Working for android platform then will move the Linux platform.
