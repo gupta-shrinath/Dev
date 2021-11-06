@@ -7,7 +7,7 @@
 - Dev is a flutter app that will run on Android, Linux and Windows.
 
 ## Status
-- Working for android platform then will move the Linux platform.
+- Working for android platform then will move to the Linux platform.
 - You can checkout the [project board](https://github.com/gupta-shrinath/Dev/projects/1).
 
 ## Additional Info.
