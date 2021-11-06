@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
+import 'package:cpu_reader/cpu_reader.dart';
 import 'package:dev/utils/platform_specification.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 class AndroidSpecification extends PlatformSpecification {
@@ -14,11 +16,32 @@ class AndroidSpecification extends PlatformSpecification {
     if (_androidInfo == null) {
       _androidInfo = await _deviceInfo.androidInfo;
     }
+    var cpuReader = await CpuReader.cpuInfo;
+    var frequenciesList = cpuReader.minMaxFrequencies!.entries
+        .map((e) => '${e.value.min} - ${e.value.max} MHZ')
+        .toList();
+    var frequencies = '';
+    for (var frequency in frequenciesList) {
+      frequencies += frequency;
+      frequencies += '\n';
+    }
+    String? processorName = '';
+    const platform = MethodChannel('learn.droid.dev/processor');
+    try {
+      processorName = await platform.invokeMethod('getProcessorName');
+      processorName = processorName!.split(':')[1];
+    } catch (e) {
+      print('Failed to get processor Name');
+    }
+    if (processorName == '') {
+      processorName = _androidInfo!.hardware;
+    }
     return {
-      // 'android_id': androidInfo.androidId,
-      // 'bootloader': androidInfo.bootloader,
-      'Hardware': _androidInfo?.hardware,
+      'Hardware': processorName,
       'Cores': Platform.numberOfProcessors.toString(),
+      'Frequencies': frequencies,
+      'ABI': cpuReader.abi,
+      'Temperature': cpuReader.cpuTemperature.toString(),
     };
   }
 
@@ -47,6 +70,7 @@ class AndroidSpecification extends PlatformSpecification {
       'Security Patch': _androidInfo?.version.securityPatch,
       'Fingerprint': _androidInfo?.fingerprint,
       'Instruction Sets': _androidInfo?.supportedAbis.toString(),
+      'Bootloader': _androidInfo?.bootloader,
     };
   }
 
