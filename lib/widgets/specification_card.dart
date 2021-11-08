@@ -15,7 +15,8 @@ class SpecificationCard extends StatelessWidget {
       this.imageText,
       this.padding})
       : super(key: key);
-  final String? title, imageText, imageUrl;
+  final String title;
+  final String? imageText, imageUrl;
   final Widget content;
   final double? padding;
   @override
@@ -32,7 +33,7 @@ class SpecificationCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 30),
                 child: Text(
-                  title!,
+                  title,
                   style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
@@ -44,30 +45,29 @@ class SpecificationCard extends StatelessWidget {
             SizedBox(
               height: 10.0,
             ),
-            Row(children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  right: padding ?? 50.0,
-                ),
-                child: Image.asset(
-                  imageUrl ?? '',
-                  height: 150,
-                  width: 150,
-                  errorBuilder: (context, object, stack) {
-                    return Container();
-                  },
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  imageText ?? '',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ]),
+            Container(
+              child: imageText != null && imageUrl != null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                          Image.asset(
+                            imageUrl ?? '',
+                            height: 64,
+                            width: 64,
+                            errorBuilder: (context, object, stack) {
+                              return Container();
+                            },
+                          ),
+                          Text(
+                            imageText ?? '',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ])
+                  : null,
+            ),
             content,
           ],
         ),
