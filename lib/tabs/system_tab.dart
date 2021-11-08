@@ -35,7 +35,6 @@ class Device extends StatelessWidget {
             content: Column(
               children: systemInformationBuilder(snapshot.data as Map),
             ),
-            imageText: 'DEVICE',
             imageUrl: 'images/android-device-icon.png',
           );
         }

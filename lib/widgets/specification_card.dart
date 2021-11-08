@@ -1,22 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Renders a section card which contains details
 ///
 /// requires [title] which is section title and
-/// [content] which is the details of that section
+/// [content] which is the widgets containing details of that section
 /// [imageUrl] is a image displayed for the section
-/// [imageText] is a text which is adjacent to the image
 class SpecificationCard extends StatelessWidget {
   SpecificationCard(
       {Key? key,
       required this.title,
       required this.content,
       this.imageUrl,
-      this.imageText,
       this.padding})
       : super(key: key);
   final String title;
-  final String? imageText, imageUrl;
+  final String? imageUrl;
   final Widget content;
   final double? padding;
   @override
@@ -46,26 +45,20 @@ class SpecificationCard extends StatelessWidget {
               height: 10.0,
             ),
             Container(
-              child: imageText != null && imageUrl != null
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                          Image.asset(
-                            imageUrl ?? '',
-                            height: 64,
-                            width: 64,
-                            errorBuilder: (context, object, stack) {
-                              return Container();
-                            },
-                          ),
-                          Text(
-                            imageText ?? '',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ])
+              child: imageUrl != null
+                  ? Row(children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Image.asset(
+                          imageUrl ?? '',
+                          height: 64,
+                          width: 64,
+                          errorBuilder: (context, object, stack) {
+                            return Container();
+                          },
+                        ),
+                      ),
+                    ])
                   : null,
             ),
             content,

@@ -34,7 +34,6 @@ class Processor extends StatelessWidget {
             content: Column(
               children: systemInformationBuilder(snapshot.data as Map),
             ),
-            imageText: 'Processor',
             imageUrl: 'images/processor-icon.png',
           );
         } else {
