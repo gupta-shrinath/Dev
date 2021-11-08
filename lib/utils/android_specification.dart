@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:battery_plus/battery_plus.dart';
+import 'package:battery_info/battery_info_plugin.dart';
+import 'package:battery_info/model/android_battery_info.dart';
 import 'package:cpu_reader/cpu_reader.dart';
 import 'package:dev/utils/platform_specification.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -86,9 +87,36 @@ class AndroidSpecification extends PlatformSpecification {
   /// Returns a map which contains battery details
   @override
   Future<Map<String, dynamic>> getBatterySpecifications() async {
-    var _battery = Battery();
+    AndroidBatteryInfo? _androidInfo =
+        await BatteryInfoPlugin().androidBatteryInfo;
+    String? _batteryHealth = _androidInfo?.health;
+    switch (_batteryHealth) {
+      case 'heath_good':
+        _batteryHealth = "Good";
+        break;
+      case 'dead':
+        _batteryHealth = "Dead";
+        break;
+      case 'over_heat':
+        _batteryHealth = "Over Heat";
+        break;
+      case 'over_voltage':
+        _batteryHealth = "Over Voltage";
+        break;
+      case 'cold':
+        _batteryHealth = "Cold";
+        break;
+      default:
+        _batteryHealth = "Failure";
+        break;
+    }
     return {
-      'battery_level': await _battery.batteryLevel,
+      'Temperature': _androidInfo!.temperature.toString() + '°C',
+      'Technology': _androidInfo.technology,
+      'Health': _batteryHealth,
+      'Voltage': (_androidInfo.voltage! / 1000).toStringAsFixed(2) + ' V',
+      'Capacity (reported by system)':
+          (_androidInfo.batteryCapacity! / 1000).toStringAsFixed(0) + ' mAh',
     };
   }
 
