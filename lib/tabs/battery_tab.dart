@@ -6,24 +6,15 @@ import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DeviceBattery extends StatefulWidget {
-  @override
-  _DeviceBatteryState createState() => _DeviceBatteryState();
-}
-
-class _DeviceBatteryState extends State<DeviceBattery> {
+class DeviceBattery extends StatelessWidget {
   // Style Vars //
   final titleFontSize = 20.0;
   final contentFontSize = 16.0;
   static const padding = 20.0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var stream =
+        BatteryInfoPlugin().androidBatteryInfoStream.asBroadcastStream();
     return Column(
       children: [
         Row(
@@ -78,7 +69,7 @@ class _DeviceBatteryState extends State<DeviceBattery> {
               width: 20.0,
             ),
             StreamBuilder(
-                stream: BatteryInfoPlugin().androidBatteryInfoStream,
+                stream: stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     AndroidBatteryInfo? _androidBatteryInfo =
@@ -114,15 +105,10 @@ class _DeviceBatteryState extends State<DeviceBattery> {
                 }),
           ],
         ),
-        FutureBuilder(
-          future: AndroidSpecification().getBatterySpecifications(),
+        StreamBuilder(
+          stream: AndroidSpecification().getBatterySpecifications(stream),
           builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
+            if (snapshot.hasData) {
               return SpecificationCard(
                 title: 'INFORMATION',
                 content: Column(
