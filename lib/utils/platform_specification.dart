@@ -10,7 +10,7 @@ abstract class PlatformSpecification {
   Future<Map<String, dynamic>> getOperatingSystemSpecifications();
 
   /// Returns a map which contains battery details
-  Future<Map<String, dynamic>> getBatterySpecifications();
+  dynamic getBatterySpecifications([_]);
 
   /// Returns a map which contains wifi details
   Future<Map<String, dynamic>> getWifiNetworkSpecifications();
