@@ -55,7 +55,7 @@ class _DevCheckState extends State<DevCheck>
                 text: 'Battery',
               ),
               Tab(
-                text: 'Camera',
+                text: 'Network',
               ),
             ],
             controller: mTabController,
