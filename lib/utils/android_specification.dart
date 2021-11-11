@@ -99,7 +99,7 @@ class AndroidSpecification extends PlatformSpecification {
     return {
       'Name': await _networkInfo.getWifiName(),
       'BSSID': await _networkInfo.getWifiBSSID(),
-      'Broadcast': await _networkInfo.getWifiBroadcast(),
+      'Broadcast': (await _networkInfo.getWifiBroadcast())!.replaceAll('/', ''),
       'IPv4': await _networkInfo.getWifiIP(),
       'IPv6': await _networkInfo.getWifiIPv6(),
       'Subnet Mask': await _networkInfo.getWifiSubmask(),
