@@ -6,6 +6,7 @@ import 'package:dev/utils/platform_specification.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:system_info/system_info.dart';
 
 /// Defines all the system information related methods for android platform
 class AndroidSpecification extends PlatformSpecification {
@@ -101,6 +102,21 @@ class AndroidSpecification extends PlatformSpecification {
       'IPv6': await _networkInfo.getWifiIPv6(),
       'Subnet Mask': await _networkInfo.getWifiSubmask(),
       'Gateway': await _networkInfo.getWifiGatewayIP(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> getMemorySpecifications() {
+    const int MEGABYTE = 1024 * 1024;
+    return {
+      'Physical Memory':
+          '${(SysInfo.getTotalPhysicalMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+      'Free Physical Memory':
+          '${(SysInfo.getFreePhysicalMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+      'Virtual Memory':
+          '${(SysInfo.getTotalVirtualMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+      'Free Virtual Memory':
+          '${(SysInfo.getFreeVirtualMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
     };
   }
 }

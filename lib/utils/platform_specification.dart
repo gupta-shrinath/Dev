@@ -14,4 +14,7 @@ abstract class PlatformSpecification {
 
   /// Returns a map which contains wifi details
   Future<Map<String, dynamic>> getWifiNetworkSpecifications();
+
+  /// Returns a map which contains memory details
+  Map<String, dynamic> getMemorySpecifications();
 }
