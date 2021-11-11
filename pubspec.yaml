@@ -30,6 +30,7 @@ dependencies:
   system_info: ^1.0.1
   disk_space: ^0.2.1
   path_provider: ^2.0.6
+  permission_handler: ^8.2.6
 
 dev_dependencies:
   flutter_test:
