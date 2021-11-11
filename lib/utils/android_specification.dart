@@ -4,8 +4,10 @@ import 'package:cpu_reader/cpu_reader.dart';
 import 'package:dev/utils/android_battery_stream.dart';
 import 'package:dev/utils/platform_specification.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:disk_space/disk_space.dart';
 import 'package:flutter/services.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:system_info/system_info.dart';
 
 /// Defines all the system information related methods for android platform
@@ -118,5 +120,31 @@ class AndroidSpecification extends PlatformSpecification {
       'Free Virtual Memory':
           '${(SysInfo.getFreeVirtualMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
     };
+  }
+
+  @override
+  Future<Map<String, dynamic>> getDiskSpecifications() async {
+    List<Directory> directories;
+    directories = (await getExternalStorageDirectories())!;
+    directories.removeAt(0);
+    Map<String, dynamic> storageDetails = {};
+    storageDetails.addAll({
+      'Total Internal Storage':
+          ((await DiskSpace.getTotalDiskSpace)! / 1000).toStringAsFixed(2) +
+              ' GB',
+      'Free Internal Storage':
+          ((await DiskSpace.getFreeDiskSpace)! / 1000).toStringAsFixed(2) +
+              ' GB',
+    });
+    for (var directory in directories) {
+      var space =
+          ((await DiskSpace.getFreeDiskSpaceForPath(directory.path))! / 1000)
+                  .toStringAsFixed(2) +
+              ' GB';
+      storageDetails.addAll({
+        directory.path.split('/')[2]: space,
+      });
+    }
+    return storageDetails;
   }
 }

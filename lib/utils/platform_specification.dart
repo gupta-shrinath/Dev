@@ -17,4 +17,7 @@ abstract class PlatformSpecification {
 
   /// Returns a map which contains memory details
   Map<String, dynamic> getMemorySpecifications();
+
+  /// Returns a map which contains disk details
+  Future<Map<String, dynamic>> getDiskSpecifications();
 }
