@@ -2,6 +2,7 @@ import 'package:dev/utils/android_specification.dart';
 import 'package:dev/utils/system_information_builder.dart';
 import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Network extends StatelessWidget {
   const Network({Key? key}) : super(key: key);
@@ -18,11 +19,17 @@ class Network extends StatelessWidget {
   }
 }
 
-class Wifi extends StatelessWidget {
+class Wifi extends StatefulWidget {
   const Wifi({Key? key}) : super(key: key);
 
   @override
+  State<Wifi> createState() => _WifiState();
+}
+
+class _WifiState extends State<Wifi> {
+  @override
   Widget build(BuildContext context) {
+    requestLocationPermission(context);
     return FutureBuilder(
         future: AndroidSpecification().getWifiNetworkSpecifications(),
         builder: (context, snapshot) {
@@ -44,5 +51,28 @@ class Wifi extends StatelessWidget {
             );
           }
         });
+  }
+
+  void requestLocationPermission(BuildContext context) async {
+    var locationPermissionStatus = await Permission.locationWhenInUse.status;
+    if (!locationPermissionStatus.isGranted) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text('Location permission'),
+                content:
+                    Text('Dev requires location permission to show Wifi name'),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      await Permission.locationWhenInUse.request();
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ));
+    }
   }
 }
