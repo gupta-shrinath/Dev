@@ -10,6 +10,7 @@ class Hardware extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Processor(),
+          Memory(),
         ],
       ),
     );
@@ -42,6 +43,20 @@ class Processor extends StatelessWidget {
           );
         }
       },
+    );
+  }
+}
+
+class Memory extends StatelessWidget {
+  const Memory({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SpecificationCard(
+      title: 'Memory',
+      content: Column(
+        children: systemInformationBuilder(
+            AndroidSpecification().getMemorySpecifications()),
+      ),
     );
   }
 }
