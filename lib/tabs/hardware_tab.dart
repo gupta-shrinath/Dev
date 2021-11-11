@@ -11,6 +11,7 @@ class Hardware extends StatelessWidget {
         children: <Widget>[
           Processor(),
           Memory(),
+          Storage(),
         ],
       ),
     );
@@ -58,5 +59,28 @@ class Memory extends StatelessWidget {
             AndroidSpecification().getMemorySpecifications()),
       ),
     );
+  }
+}
+
+class Storage extends StatelessWidget {
+  const Storage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: AndroidSpecification().getDiskSpecifications(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return SpecificationCard(
+              title: 'Storage',
+              content: Column(
+                children: systemInformationBuilder(snapshot.data as Map),
+              ),
+            );
+          } else if (snapshot.connectionState != ConnectionState.done) {
+            CircularProgressIndicator.adaptive();
+          }
+          return Text('Failed to get storage info');
+        });
   }
 }
