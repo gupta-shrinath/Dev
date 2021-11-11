@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 /// Renders key values from map into rows
+///
+/// keys on the left side and values on the right
+/// text color for both are white
 List<Widget> systemInformationBuilder(map) {
   List<Widget> specInfo = [];
   for (MapEntry spec in map.entries) {

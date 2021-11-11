@@ -12,15 +12,15 @@ import 'package:system_info/system_info.dart';
 
 /// Defines all the system information related methods for android platform
 class AndroidSpecification extends PlatformSpecification {
-  /// device_info_plus package classes to get system information
   DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
   AndroidDeviceInfo? _androidInfo;
 
   /// Returns a map which contains processor details
   ///
   /// Reads the /proc/cpuinfo file in android system
-  /// which emits line hardware : YOUR_PROCESSOR_NAME
-  /// Implemented using Platform Channel
+  /// which emits line hardware : Hardware : YOUR_PROCESSOR_NAME
+  /// Implemented using Platform Channel learn.droid.dev/processor
+  /// It also uses cpu_reader package
   @override
   Future<Map<String, dynamic>> getProcessorSpecifications() async {
     if (_androidInfo == null) {
@@ -56,6 +56,7 @@ class AndroidSpecification extends PlatformSpecification {
   }
 
   /// Returns a map which contains model, manufacturer and other details
+  /// from device_info package
   @override
   Future<Map<String, dynamic>> getDeviceSpecifications() async {
     if (_androidInfo == null) {
@@ -70,7 +71,7 @@ class AndroidSpecification extends PlatformSpecification {
     };
   }
 
-  /// Returns a map which contains OS details
+  /// Returns a map which contains OS details from device_info package
   @override
   Future<Map<String, dynamic>> getOperatingSystemSpecifications() async {
     if (_androidInfo == null) {
@@ -87,12 +88,14 @@ class AndroidSpecification extends PlatformSpecification {
   }
 
   /// Returns a map which contains battery details
+  ///
+  /// [AndroidBatteryStream] which uses battery_info package
   @override
   Stream<Map<String, dynamic>>? getBatterySpecifications([stream]) {
     return AndroidBatteryStream().getBatteryInfoStream(stream);
   }
 
-  /// Returns a map which contains wifi details
+  /// Returns a map which contains wifi details using network_info package
   @override
   Future<Map<String, dynamic>> getWifiNetworkSpecifications() async {
     final NetworkInfo _networkInfo = NetworkInfo();
@@ -107,6 +110,7 @@ class AndroidSpecification extends PlatformSpecification {
     };
   }
 
+  /// Returns a map which contains memory details using system_info package
   @override
   Map<String, dynamic> getMemorySpecifications() {
     const int MEGABYTE = 1024 * 1024;
@@ -122,6 +126,7 @@ class AndroidSpecification extends PlatformSpecification {
     };
   }
 
+  /// Returns a map which contains disk details using disk_space package
   @override
   Future<Map<String, dynamic>> getDiskSpecifications() async {
     List<Directory> directories;

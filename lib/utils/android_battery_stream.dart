@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:battery_info/model/android_battery_info.dart';
 
+/// Provides method for battery details as Stream
 class AndroidBatteryStream {
+  /// Method for battery details as Stream from battery_info package
   Stream<Map<String, dynamic>> getBatteryInfoStream(
       Stream<AndroidBatteryInfo?> _androidBatteryInfoStream) {
     Stream<Map<String, dynamic>> _info = _androidBatteryInfoStream.map((event) {

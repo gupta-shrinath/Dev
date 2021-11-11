@@ -13,8 +13,7 @@ class DeviceBattery extends StatelessWidget {
   static const padding = 20.0;
   @override
   Widget build(BuildContext context) {
-    var stream =
-        BatteryInfoPlugin().androidBatteryInfoStream.asBroadcastStream();
+    var stream = BatteryInfoPlugin().androidBatteryInfoStream;
     return Column(
       children: [
         Row(
