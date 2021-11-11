@@ -27,6 +27,7 @@ dependencies:
   device_info_plus: ^3.1.0
   network_info_plus: ^2.1.0
   cpu_reader: ^3.0.0
+  system_info: ^1.0.1
 
 dev_dependencies:
   flutter_test:
