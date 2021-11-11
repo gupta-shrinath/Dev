@@ -28,6 +28,8 @@ dependencies:
   network_info_plus: ^2.1.0
   cpu_reader: ^3.0.0
   system_info: ^1.0.1
+  disk_space: ^0.2.1
+  path_provider: ^2.0.6
 
 dev_dependencies:
   flutter_test:
