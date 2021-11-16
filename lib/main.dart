@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'tabs/hardware_tab.dart';
 
 void main() => runApp(
-      DevCheck(),
+      const DevCheck(),
     );
 
 class DevCheck extends StatefulWidget {
+  const DevCheck({Key? key}) : super(key: key);
+
   @override
   _DevCheckState createState() => _DevCheckState();
 }
@@ -37,14 +39,14 @@ class _DevCheckState extends State<DevCheck>
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'DevCheck',
           ),
           backgroundColor: Colors.green,
           bottom: TabBar(
             indicatorColor: Colors.green,
             labelColor: Colors.white,
-            tabs: <Tab>[
+            tabs: const <Tab>[
               Tab(
                 text: 'Hardware',
               ),
@@ -68,7 +70,7 @@ class _DevCheckState extends State<DevCheck>
             Hardware(),
             System(),
             DeviceBattery(),
-            Network(),
+            const Network(),
 
             // System(),
             // Battery(),

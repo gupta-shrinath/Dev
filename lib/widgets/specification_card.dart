@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 /// [content] which is the widgets containing details of that section
 /// [imageUrl] is a image displayed for the section
 class SpecificationCard extends StatelessWidget {
-  SpecificationCard(
+  const SpecificationCard(
       {Key? key,
       required this.title,
       required this.content,
@@ -23,17 +23,17 @@ class SpecificationCard extends StatelessWidget {
     return Card(
       elevation: 20,
       color: Colors.grey.shade800,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
             Row(children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(left: 30),
+                padding: const EdgeInsets.only(left: 30),
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -41,7 +41,7 @@ class SpecificationCard extends StatelessWidget {
                 ),
               ),
             ]),
-            SizedBox(
+            const SizedBox(
               height: 10.0,
             ),
             Container(

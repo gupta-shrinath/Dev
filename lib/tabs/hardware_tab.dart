@@ -4,11 +4,13 @@ import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
 
 class Hardware extends StatelessWidget {
+  const Hardware({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: <Widget>[
+        children: const <Widget>[
           Processor(),
           Memory(),
           Storage(),
@@ -26,7 +28,7 @@ class Processor extends StatelessWidget {
       future: AndroidSpecification().getProcessorSpecifications(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -39,7 +41,7 @@ class Processor extends StatelessWidget {
             imageUrl: 'images/processor-icon.png',
           );
         } else {
-          return Center(
+          return const Center(
             child: Text('Failed to get the specs. Restart the app'),
           );
         }
@@ -78,9 +80,9 @@ class Storage extends StatelessWidget {
               ),
             );
           } else if (snapshot.connectionState != ConnectionState.done) {
-            CircularProgressIndicator.adaptive();
+            const CircularProgressIndicator.adaptive();
           }
-          return Text('Failed to get storage info');
+          return const Text('Failed to get storage info');
         });
   }
 }

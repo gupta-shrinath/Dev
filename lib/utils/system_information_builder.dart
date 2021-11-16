@@ -15,12 +15,12 @@ List<Widget> systemInformationBuilder(map) {
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
               child: Text(
                 spec.key,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -30,10 +30,10 @@ List<Widget> systemInformationBuilder(map) {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text(
                 spec.value.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                 ),

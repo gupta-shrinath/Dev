@@ -11,6 +11,8 @@ class DeviceBattery extends StatelessWidget {
   final titleFontSize = 20.0;
   final contentFontSize = 16.0;
   static const padding = 20.0;
+
+  const DeviceBattery({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var stream = BatteryInfoPlugin().androidBatteryInfoStream;
@@ -34,25 +36,25 @@ class DeviceBattery extends StatelessWidget {
         Row(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding),
+              padding: const EdgeInsets.symmetric(horizontal: padding),
               child: FutureBuilder<AndroidBatteryInfo?>(
                 future: BatteryInfoPlugin().androidBatteryInfo,
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
-                    return CircularProgressIndicator.adaptive();
+                    return const CircularProgressIndicator.adaptive();
                   } else if (snapshot.connectionState == ConnectionState.done &&
                       snapshot.hasData) {
                     AndroidBatteryInfo? _androidInfo = snapshot.data;
                     return Text(
                       _androidInfo!.batteryLevel.toString() + '%',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
                         fontSize: 50.0,
                       ),
                     );
                   } else {
-                    return Text(
+                    return const Text(
                       '%',
                       style: TextStyle(
                         color: Colors.green,
@@ -64,7 +66,7 @@ class DeviceBattery extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20.0,
             ),
             StreamBuilder(
@@ -79,7 +81,7 @@ class DeviceBattery extends StatelessWidget {
                           _androidBatteryInfo!.chargingStatus
                               .toString()
                               .replaceFirst("ChargingStatus.", ""),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
@@ -90,7 +92,7 @@ class DeviceBattery extends StatelessWidget {
                               (_androidBatteryInfo.currentNow! / 1000)
                                   .toStringAsFixed(0) +
                               ' mA',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
@@ -99,7 +101,7 @@ class DeviceBattery extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                 }),
           ],

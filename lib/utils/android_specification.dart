@@ -12,7 +12,7 @@ import 'package:system_info/system_info.dart';
 
 /// Defines all the system information related methods for android platform
 class AndroidSpecification extends PlatformSpecification {
-  DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
+  final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
   AndroidDeviceInfo? _androidInfo;
 
   /// Returns a map which contains processor details
@@ -23,9 +23,7 @@ class AndroidSpecification extends PlatformSpecification {
   /// It also uses cpu_reader package
   @override
   Future<Map<String, dynamic>> getProcessorSpecifications() async {
-    if (_androidInfo == null) {
-      _androidInfo = await _deviceInfo.androidInfo;
-    }
+    _androidInfo ??= await _deviceInfo.androidInfo;
     var cpuReader = await CpuReader.cpuInfo;
     var frequenciesList = cpuReader.minMaxFrequencies!.entries
         .map((e) => '${e.value.min} - ${e.value.max} MHZ')
@@ -41,7 +39,7 @@ class AndroidSpecification extends PlatformSpecification {
       processorName = await platform.invokeMethod('getProcessorName');
       processorName = processorName!.split(':')[1];
     } catch (e) {
-      print('Failed to get processor Name');
+      throw Exception('Failed to get processor Name');
     }
     if (processorName == '') {
       processorName = _androidInfo!.hardware;
@@ -59,9 +57,7 @@ class AndroidSpecification extends PlatformSpecification {
   /// from device_info package
   @override
   Future<Map<String, dynamic>> getDeviceSpecifications() async {
-    if (_androidInfo == null) {
-      _androidInfo = await _deviceInfo.androidInfo;
-    }
+    _androidInfo ??= await _deviceInfo.androidInfo;
     return {
       'Model': _androidInfo?.model,
       'Product': _androidInfo?.product,
@@ -74,9 +70,7 @@ class AndroidSpecification extends PlatformSpecification {
   /// Returns a map which contains OS details from device_info package
   @override
   Future<Map<String, dynamic>> getOperatingSystemSpecifications() async {
-    if (_androidInfo == null) {
-      _androidInfo = await _deviceInfo.androidInfo;
-    }
+    _androidInfo ??= await _deviceInfo.androidInfo;
     return {
       'Android Version': _androidInfo?.version.release,
       'API': _androidInfo?.version.sdkInt,
@@ -99,30 +93,51 @@ class AndroidSpecification extends PlatformSpecification {
   @override
   Future<Map<String, dynamic>> getWifiNetworkSpecifications() async {
     final NetworkInfo _networkInfo = NetworkInfo();
+    var name = await _networkInfo
+        .getWifiBSSID()
+        .onError((error, stackTrace) => error.toString());
+    var bssid = await _networkInfo
+        .getWifiBSSID()
+        .onError((error, stackTrace) => error.toString());
+    var broadcast = await _networkInfo
+        .getWifiBroadcast()
+        .onError((error, stackTrace) => error.toString());
+    var ipv4 = await _networkInfo
+        .getWifiIP()
+        .onError((error, stackTrace) => error.toString());
+    var ipv6 = await _networkInfo
+        .getWifiIPv6()
+        .onError((error, stackTrace) => error.toString());
+    var subnet = await _networkInfo
+        .getWifiSubmask()
+        .onError((error, stackTrace) => error.toString());
+    var gateway = await _networkInfo
+        .getWifiGatewayIP()
+        .onError((error, stackTrace) => error.toString());
     return {
-      'Name': await _networkInfo.getWifiName(),
-      'BSSID': await _networkInfo.getWifiBSSID(),
-      'Broadcast': (await _networkInfo.getWifiBroadcast())!.replaceAll('/', ''),
-      'IPv4': await _networkInfo.getWifiIP(),
-      'IPv6': await _networkInfo.getWifiIPv6(),
-      'Subnet Mask': await _networkInfo.getWifiSubmask(),
-      'Gateway': await _networkInfo.getWifiGatewayIP(),
+      'Name': name,
+      'BSSID': bssid,
+      'Broadcast': broadcast,
+      'IPv4': ipv4,
+      'IPv6': ipv6,
+      'Subnet Mask': subnet,
+      'Gateway': gateway,
     };
   }
 
   /// Returns a map which contains memory details using system_info package
   @override
   Map<String, dynamic> getMemorySpecifications() {
-    const int MEGABYTE = 1024 * 1024;
+    const int megaByte = 1024 * 1024;
     return {
       'Physical Memory':
-          '${(SysInfo.getTotalPhysicalMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+          '${(SysInfo.getTotalPhysicalMemory() ~/ megaByte / 1000).toStringAsFixed(2)} GB',
       'Free Physical Memory':
-          '${(SysInfo.getFreePhysicalMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+          '${(SysInfo.getFreePhysicalMemory() ~/ megaByte / 1000).toStringAsFixed(2)} GB',
       'Virtual Memory':
-          '${(SysInfo.getTotalVirtualMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+          '${(SysInfo.getTotalVirtualMemory() ~/ megaByte / 1000).toStringAsFixed(2)} GB',
       'Free Virtual Memory':
-          '${(SysInfo.getFreeVirtualMemory() ~/ MEGABYTE / 1000).toStringAsFixed(2)} GB',
+          '${(SysInfo.getFreeVirtualMemory() ~/ megaByte / 1000).toStringAsFixed(2)} GB',
     };
   }
 
