@@ -1,4 +1,5 @@
 import 'package:dev/utils/android_specification.dart';
+import 'package:dev/utils/platform_specification.dart';
 import 'package:dev/utils/system_information_builder.dart';
 import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class Processor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: AndroidSpecification().getProcessorSpecifications(),
+      future: PlatformSpecification.getInstance().getProcessorSpecifications(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return const Center(
@@ -58,7 +59,7 @@ class Memory extends StatelessWidget {
       title: 'Memory',
       content: Column(
         children: systemInformationBuilder(
-            AndroidSpecification().getMemorySpecifications()),
+            PlatformSpecification.getInstance().getMemorySpecifications()),
       ),
     );
   }

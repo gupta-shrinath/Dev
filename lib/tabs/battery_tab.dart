@@ -1,6 +1,6 @@
 import 'package:battery_info/battery_info_plugin.dart';
 import 'package:battery_info/model/android_battery_info.dart';
-import 'package:dev/utils/android_specification.dart';
+import 'package:dev/utils/platform_specification.dart';
 import 'package:dev/utils/system_information_builder.dart';
 import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -107,7 +107,8 @@ class DeviceBattery extends StatelessWidget {
           ],
         ),
         StreamBuilder(
-          stream: AndroidSpecification().getBatterySpecifications(stream),
+          stream: PlatformSpecification.getInstance()
+              .getBatterySpecifications(stream),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return SpecificationCard(

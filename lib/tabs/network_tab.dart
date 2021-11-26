@@ -1,4 +1,4 @@
-import 'package:dev/utils/android_specification.dart';
+import 'package:dev/utils/platform_specification.dart';
 import 'package:dev/utils/system_information_builder.dart';
 import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,8 @@ class _WifiState extends State<Wifi> {
   Widget build(BuildContext context) {
     requestLocationPermission(context);
     return FutureBuilder(
-        future: AndroidSpecification().getWifiNetworkSpecifications(),
+        future:
+            PlatformSpecification.getInstance().getWifiNetworkSpecifications(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Center(
