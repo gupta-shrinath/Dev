@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:system_info/system_info.dart';
 
 /// Defines all the system information related methods for android platform
-class AndroidSpecification extends PlatformSpecification {
+class AndroidSpecification implements PlatformSpecification {
   final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
   AndroidDeviceInfo? _androidInfo;
 
