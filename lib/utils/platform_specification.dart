@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:dev/utils/android_specification.dart';
+import 'package:dev/utils/linux_specification.dart';
+
 /// Defines methods that needs to run on every platform
 abstract class PlatformSpecification {
   /// Returns a map which contains processor details
@@ -20,4 +25,17 @@ abstract class PlatformSpecification {
 
   /// Returns a map which contains disk details
   Future<Map<String, dynamic>> getDiskSpecifications();
+
+  /// Returns platform dependent platform specification instance
+  ///
+  /// If platform is not implemented then it throws Exception
+  static PlatformSpecification getInstance() {
+    if (Platform.isAndroid) {
+      return AndroidSpecification();
+    } else if (Platform.isLinux) {
+      return LinuxSpecification();
+    } else {
+      throw Exception('Platform Not Implemented');
+    }
+  }
 }
