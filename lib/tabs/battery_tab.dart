@@ -118,7 +118,7 @@ class DeviceBattery extends StatelessWidget {
                 ),
               );
             } else {
-              return Center(
+              return const Center(
                 child: Text('Failed to get the specs. Restart the app'),
               );
             }

@@ -11,7 +11,7 @@ class Network extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
+        children: const [
           Wifi(),
         ],
       ),
@@ -35,7 +35,7 @@ class _WifiState extends State<Wifi> {
             PlatformSpecification.getInstance().getWifiNetworkSpecifications(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.connectionState == ConnectionState.done &&
@@ -47,7 +47,7 @@ class _WifiState extends State<Wifi> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: Text('Failed to get the specs. Restart the app'),
             );
           }
@@ -61,8 +61,8 @@ class _WifiState extends State<Wifi> {
           context: context,
           builder: (context) => AlertDialog(
                 title: const Text('Location permission'),
-                content:
-                    Text('Dev requires location permission to show Wifi name'),
+                content: const Text(
+                    'Dev requires location permission to show Wifi name'),
                 actions: [
                   TextButton(
                     child: const Text('OK'),

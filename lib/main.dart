@@ -66,11 +66,11 @@ class _DevCheckState extends State<DevCheck>
         //backgroundColor: Colors.grey.shade800,
         body: TabBarView(
           controller: mTabController,
-          children: <Widget>[
+          children: const <Widget>[
             Hardware(),
             System(),
             DeviceBattery(),
-            const Network(),
+            Network(),
 
             // System(),
             // Battery(),

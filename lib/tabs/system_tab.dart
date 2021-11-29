@@ -5,11 +5,12 @@ import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
 
 class System extends StatelessWidget {
+  const System({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: <Widget>[
+        children: const <Widget>[
           Device(),
           OperatingSystem(),
         ],
@@ -23,10 +24,10 @@ class Device extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: PlatformSpecification.getInstance()!.getDeviceSpecifications(),
+      future: PlatformSpecification.getInstance().getDeviceSpecifications(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -39,7 +40,7 @@ class Device extends StatelessWidget {
             imageUrl: 'images/android-device-icon.png',
           );
         }
-        return Center(
+        return const Center(
           child: Text('Failed to get the specs. Restart the app'),
         );
       },
@@ -48,6 +49,7 @@ class Device extends StatelessWidget {
 }
 
 class OperatingSystem extends StatefulWidget {
+  const OperatingSystem({Key? key}) : super(key: key);
   @override
   _OperatingSystemState createState() => _OperatingSystemState();
 }
@@ -59,7 +61,7 @@ class _OperatingSystemState extends State<OperatingSystem> {
       future: AndroidSpecification().getOperatingSystemSpecifications(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -71,7 +73,7 @@ class _OperatingSystemState extends State<OperatingSystem> {
             ),
           );
         } else {
-          return Center(
+          return const Center(
             child: Text('Failed to get the specs. Restart the app'),
           );
         }
