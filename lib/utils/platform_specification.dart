@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:dev/utils/android_specification.dart';
-import 'package:dev/utils/linux_specification.dart';
+import 'package:dev/utils/android/android_specification.dart';
+import 'package:dev/utils/linux/linux_specification.dart';
 
 /// Defines methods that needs to run on every platform
 abstract class PlatformSpecification {

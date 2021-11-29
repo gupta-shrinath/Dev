@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cpu_reader/cpu_reader.dart';
-import 'package:dev/utils/android_battery_stream.dart';
+import 'package:dev/utils/android/android_battery_stream.dart';
 import 'package:dev/utils/platform_specification.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:disk_space/disk_space.dart';

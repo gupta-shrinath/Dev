@@ -1,5 +1,5 @@
 import 'package:dev/utils/platform_specification.dart';
-import 'package:dev/utils/system_information_builder.dart';
+import 'package:dev/widgets/system_information_builder.dart';
 import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';

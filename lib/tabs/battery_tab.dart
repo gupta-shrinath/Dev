@@ -1,7 +1,7 @@
 import 'package:battery_info/battery_info_plugin.dart';
 import 'package:battery_info/model/android_battery_info.dart';
 import 'package:dev/utils/platform_specification.dart';
-import 'package:dev/utils/system_information_builder.dart';
+import 'package:dev/widgets/system_information_builder.dart';
 import 'package:dev/widgets/specification_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
