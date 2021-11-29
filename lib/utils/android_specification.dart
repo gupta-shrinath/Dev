@@ -14,6 +14,12 @@ import 'package:system_info/system_info.dart';
 class AndroidSpecification implements PlatformSpecification {
   final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
   AndroidDeviceInfo? _androidInfo;
+  static final AndroidSpecification _androidSpecification =
+      AndroidSpecification._internal();
+
+  factory AndroidSpecification() => _androidSpecification;
+
+  AndroidSpecification._internal();
 
   /// Returns a map which contains processor details
   ///
